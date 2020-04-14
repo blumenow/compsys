@@ -3,7 +3,7 @@
 echo
 #Checks if the number of arguments is equal exactly to 3, or triggers a warning, reminder of use and exits the script
 if [ ! $# = 3 ]; then
-	echo "Error: incorrect number of arguments!"
+	echo "Error: incorrect number of arguments"
 	echo
 	echo "Usage: cpc [-cz] [source-file] [target-directory]"
 	echo
@@ -17,7 +17,7 @@ fi
 #Checks whether the arguments of the variables are correct
 arguments (){
 #If the source file does not exist then print a warning and exit
-if [ -e $src ]; then
+if [ ! -e $src ]; then
 	echo "The source file $src does not exist."
 	echo
 	exit 1
@@ -55,7 +55,7 @@ if [ $ext != "gz" ]; then
 	mv $src.gz $tgt
 	echo "gzipped file $src has been created in directory $tgt."
 	echo
-#Else, if the file extension is .gz, then unzip the zipped contents into the target directory
+#Else, if the file extension is .gz, then extract the zipped contents into the target directory
 else
 	gunzip $src
 	mv $name $tgt 
@@ -63,8 +63,9 @@ else
 	echo
 fi
 }
+
 arguments
-#If the first argument, the option is '-c', then run the copy function.
+#If the first argument, the option, is '-c', then run the copy function.
 #Else, if the option argument is '-z', then run the zip function.
 #Else, report an error and display correct usage of the script
 case "$opt" in
@@ -78,3 +79,7 @@ case "$opt" in
 		echo "Error: the first argument must be either '-c' or '-z'"
 		echo
 		echo "Usage: cpc [-cz] [source-file] [target-directory]"
+		echo
+		exit 1
+		;;
+esac
